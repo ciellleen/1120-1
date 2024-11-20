@@ -1,0 +1,197 @@
+C언어 char형 배열과 문자열의 차이
+
+# 문자열의 개념
+
+c에서는 문자열이 따로 없고 문자의 배열로 이를 표현함.
+
+문자열은 말 그대로 문자들의 열임. 즉, 문자들의 집합임.
+
+특이점은 문자열은 컴퓨터 메모리 구조 상 마지막에 널(null) 값을 포함한다는 점임
+
+어떠한 값도 의미 있지 않다는 의미.
+
+<aside>
+💡
+
+char형 변수로 저장하기엔 무리가 있기 때문에 char형 배열이 필요함.
+
+</aside>
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/b0f8adf5-4178-45cc-beda-7ac3401a1958/image.png)
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/27865667-55cf-4bc0-b19e-b000ad896a62/image.png)
+
+null 값이 들어가는 이유는 문자열의 마지막임을 알리기 위해서.
+
+그래서 printf() 함수를 실행하면, 컴퓨터는 내부적으로 null 값을 만날 때까지 출력하는 것임.
+
+# 문자열 리터럴과 포인터
+
+문자열 형태로 포인터를 사용할 수 있음. 
+
+배열 형태가 아닌, 포인터 자체에 문자열을 마치 상수처럼 읽기 전용으로 넣는 것임.
+
+이 때, 큰따옴표 안에 문자열을 넣게 되는데 이걸 문자열 리터럴 이라고 하고, 컴파일러가 알아서 문자열 자체가 남아 있는 메모리에 담길 수 있도록 주소를 만들어짐. 
+
+그 주소를 포인터가 가지는 것 
+
+읽기 전용이기 때문에 변경이 불가능하며 굳이 문자열을 바꾸고 싶다면, 다른 문자열을 해당 포인터가 가리키게 하는 방식을 취해야 함. 
+
+```c
+#include <stdio.h>
+int main(void) 
+{  
+    char *a = "Hi Eunjin";   
+    printf("%s\n", a);
+}
+```
+
+C에서 문자열은 내부적으로 배열 형태로 처리가 되고 포인터로 치환될 수 있으니, 포인터 자체 값인 a를 출력하게 만들면 null값을 만나는 순간까지 출력하게 만듦.
+
+```c
+#include <stdio.h>
+int main(void) 
+{  
+    char *a = "Hi Eunjin";   
+    printf("%c\n", a[0]);
+    printf("%c\n", a[3]);
+    printf("%c\n", a[6]);
+    printf("%c\n", a[8]);
+}
+```
+
+<aside>
+💡
+
+H
+E
+j
+n
+
+</aside>
+
+배열로 처리되기 때문에 원하는 인덱스에 해당하는 문자를 따로 출력할 수도 있음.
+
+# 문자 상수 / 문자열 상수
+
+문자 상수는 ‘A’와 같이 ‘ ‘로 표현됨.
+
+상수라고 해서 숫자만 있는 것이 아님.
+
+문자 상수란 문자의 값이며 변하지 않는 수임.
+
+예를 들어, ‘A’라고 하면 이 A는 문자값임. 하지만 char A라고 하면 이 A는 문자값이 아니라 문자를 저장하기 위한 변수가 됨.
+
+A라고 하는 이름은 변하지 않지만 그 안에 들어가는 문자 상수(값)은 언제든 변할 수 있기 때문.
+
+# 문자열의 초기화
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/f669a0d1-f08c-4f6d-9609-8334c53b9d9d/image.png)
+
+**A** : 크기가 6인 문자 배열을 선언하고 각 자리에 들어갈 문자를 순서대로 지정
+**B** : 크기가 6인 문자 배열을 선언함과 동시에 문자열 대입
+**C** : 문자열 상수로 초기화하지만 배열의 크기를 지정하지 않음. 문자열 상수의 크기에 따라 자동으로 크기 지정
+
+# 문자열의 출력
+
+```c
+char c = 'A';
+char str[10] = "ILoveYou";
+
+printf("%c", c);
+printf("%s", str);
+```
+
+# NULL문자 (’\0’)
+
+NULL이라는 문자는 상징적으로 사용되며 사실상 그 값은 0이다.
+NULL문자는 문자열의 끝을 알리기 위해 사용됨
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/cb0ecfea-2758-4190-b7ca-5a810113a448/image.png)
+
+# 자료형
+
+string은 기본 자료형이 아니라 객체. 
+
+char형 배열은 기본 자료형임.
+
+string은 객체이기 때문에 c언어에 없음
+
+# 차이
+
+string은 마지막에 \0 을 담지 않음.
+
+즉, string은 문자열의 마지막을 null문자로 구분하는 것이 아님.
+
+char형 배열은 마지막에 \0을 담음. 즉, char형 배열은 \0로 문자열의 마지막을 구분함.
+
+string은 애초에 '\0'을 담지 못하지만 char형 배열은 '\0'을 사용자가 임의로 넣을 수 있음. 
+
+따라서 char c[] = "app\0le" 이라고 선언 후 출력하면 app까지만 출력됨.
+
+사용자가 임의로 넣은 \0을 보고서 문자열의 마지막이라고 판단하기 때문
+
+둘이 같은 것이 아니므로 마구잡이로 섞어 사용하다가는 코드가 망가질 수도 있음.
+
+![image.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/43f4c680-a7ab-4f2d-b233-d37ec40472ce/43fb8df9-9176-4350-ade7-b1dda3eb0fc4/image.png)
+
+# 문자열 입출력 함수
+
+## gets() 함수
+
+scanf()함수는 공백을 만날 때까지 입력을 받는 함수고, gets()함수는 공백까지 포함해서 한 줄을 입력받는 함수다.
+
+```c
+#include <stdio.h>
+
+int main(void) 
+{  
+    char a[100];
+    gets(a);
+    printf("%s\n", a);
+}
+```
+
+<aside>
+💡
+
+해당 코드를 실행시켜보면 워닝메세지가 뜨는걸 볼 수 있는데
+gets()함수는 입력받을 문자의 개수를 설정하지 못하기 때문에 버퍼의 overflow를 일으킨다고 한다.
+
+→ fgets()함수 사용으로 해결
+
+</aside>
+
+## fgets() 함수
+
+```c
+#include <stdio.h>
+#include <string.h>
+
+int main(void) 
+{  
+    char a[100];
+    fgets(a, sizeof(a), stdin);
+    printf("%s\n", a);
+}
+```
+
+fgets()의 인자 세 개 중, 첫번째는 입력받을 문자열, 두 번째는 입력받은 문자열의 최대 크기(’\0’ 포함), 마지막은 file로 표준 입력장치(키보드)에서 데이터를 입력받겠다는 의미다.
+sizeof()는 c에서 제공하는 기본 함수로, 배열의 전체 크기를 구하는 함수다.
+
+## **gets_s() 함수**
+
+또 다른 옵션 gets_s() 함수를 사용하는 것이다.
+해당 함수는 버퍼의 크기를 벗어나면 입력을 받지 않는 함수이다.
+두번째 인수로 입력받은 문자열의 크기를 받는다.
+
+```c
+#include <stdio.h> 
+
+int main(void) 
+{  
+    char a[100];
+    gets_s(a, sizeof(a));
+    printf("%s\n", a);
+}
+```
